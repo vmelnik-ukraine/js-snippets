@@ -30,35 +30,61 @@
 
       </header>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1>Available snippets</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>
+    <h3>Forms changes spectator</h3>
+    <p>Simple script to make forms snapshots and then compare them.</p>
+    <code class="highlight"><pre><span class="cm">/**
+ * Lets create spectator for specific form with id 'form-id'.
+ * Also we can just provide selector for area with multiple forms
+ */</span>
+var formSpectator = new FormSpectator(<span class="s">'#form-id'</span>);
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<span class="c">// We don't change anything, so form is in the same state as before</span>
+formSpectator.wasChanges(); <span class="c">// false</span>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<span class="c">// Change some value in form</span>
+$(<span class="s">'#form-field'</span>).val(<span class="s">'new value'</span>);
 
-<h3>Designer Templates</h3>
+<span class="c">// Check form state again</span>
+formSpectator.wasChanges(); <span class="c">// true</span>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<span class="cm">/**
+ * If are you using ajax, you need to reinit form spectator
+ * after form replacement
+ */</span>
+formSpectator.reinit();
+    </pre></code>
+    <p>More complex example</p>
+    <code class="highlight"><pre><span class="cm">/**
+ * If were changes in form, then we allow to send it to server. 
+ * After ajax form replacement we must reinit form spectator
+ * so new form values become a new default state for this form
+ */</span>
+var formSpectator = new FormSpectator(<span class="s">'#form-id'</span>);
 
-<h3>Rather Drive Stick?</h3>
+$(<span class="s">'#form-submit-btn'</span>).click(function() {
+    if(formSpectator.wasChanges()) {
+        <span class="cm">/**
+         * Send form by ajax to server and then replace it with form
+         * from response...
+         */</span>
+        formSpectator.reinit();
+    } else {
+        alert(<span class="s">'Nothing to update'</span>);
+    }
+});
+        </pre></code>
+</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<h3>Contributing</h3>
 
-<h3>Authors and Contributors</h3>
+<p>If You have useful snippets and want to share, feel free to add them and do pull request</p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
       <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
