@@ -31,7 +31,7 @@ function FormSpectator(selector) {
     /**
      * Reinit registry after ajax
      */
-    this.reinitRegistry = function() {
+    this.reinit = function() {
         _registry = [];
         _initRegistry();
     }
